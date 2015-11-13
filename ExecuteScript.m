@@ -9,7 +9,7 @@ clear('all');
     InputImage_Name2 = 'baboon.bmp';
     InputImage_Name3 = 'fruits.bmp';
     InputImage_Name4 = 'peppers.bmp';
-    InputImage_Path = [InputImage_Dir InputImage_Name1];
+    InputImage_Path = [InputImage_Dir InputImage_Name4];
 	
 	WMImage_Dir = 'watermarked_images/';
     WMImage_Name = 'peppers_wm.bmp';
@@ -24,8 +24,8 @@ clear('all');
 	% Preprocessing - read original image
 	% hint: imread()
 	InputImage = imread(InputImage_Path);
-	figure
-	imshow(InputImage);
+	% figure
+	% imshow(InputImage);
 
 	
 	% Prepoorcessing - generate watermark (n*1 +-1 vector)
@@ -36,7 +36,7 @@ clear('all');
 
 	% Watermark embedding settings - set alpha, lambda, blkSize, pattern
 	% hint: randn()+sign() to generate pattern
-	alpha = 1;
+	alpha = 11;
 	lambda = 1;
 	blkSize = 8;
 	% TODO: patternSize should small than the middle band
