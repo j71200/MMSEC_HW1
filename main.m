@@ -19,8 +19,8 @@ blkSizeListLen = length(blkSizeList);
 capacityList = floor(height./blkSizeList) .* floor(width./blkSizeList);
 
 alpha_head = 0.1;
-alpha_tail = 100;
-alpha_slot = 100;
+alpha_tail = 1;
+alpha_slot = 20;
 alpha = linspace(alpha_head, alpha_tail, alpha_slot);
 alphaLenth = length(alpha);
 lambda = 1;
@@ -47,8 +47,6 @@ for blkSizeIdx = 1:blkSizeListLen
 	plot(alpha, mPSNR(:, blkSizeIdx), 'r');
 	psnrImageFileName = ['experiment\sliding_alpha\psnr\a_' num2str(alpha_head) '_' num2str(alpha_tail) '_' num2str(alpha_slot) '_b_' num2str(blkSize) '_l_' num2str(lambda) '_psnr.png'];
 	saveas(psnrFig, psnrImageFileName);
-	% Ploting line split PSNR figure
-	% plot(...)
 
 
 	%% Ploting normal BER figure
@@ -65,10 +63,8 @@ for blkSizeIdx = 1:blkSizeListLen
 end
 
 %% For saving
-% dataFileName = ['experiment/sliding_alpha/mat/a_0_b_', num2str(blkSize), '_l_', num2str(lambda), '.mat'];
 dataFileName = ['alpha_' num2str(alpha_head) '_' num2str(alpha_tail) '_' num2str(alpha_slot) '.mat'];
 save(dataFileName);
-% save(dataFileName, 'mPSNR', 'ber');
 
 
 %% Ploting multi-PSNR figure
@@ -84,7 +80,6 @@ plot(alpha, mPSNR(:, 1), '-', alpha, mPSNR(:, 2), '-o', alpha, mPSNR(:, 3), '-*'
 legend(['block size = ' num2str(blkSizeList(1)) ' capacity = ' num2str(capacityList(1))], ['block size = ' num2str(blkSizeList(2)) ' capacity = ' num2str(capacityList(2))], ['block size = ' num2str(blkSizeList(3)) ' capacity = ' num2str(capacityList(3))], ['block size = ' num2str(blkSizeList(4)) ' capacity = ' num2str(capacityList(4))], ['block size = ' num2str(blkSizeList(5)) ' capacity = ' num2str(capacityList(5))] );
 
 multipsnrImageFileName = ['experiment\sliding_alpha\psnr\a_' num2str(alpha_head) '_' num2str(alpha_tail) '_' num2str(alpha_slot) '_l_' num2str(lambda) '_multipsnr.png'];
-% multipsnrImageFileName = ['experiment\sliding_alpha\psnr\a_0_b_0_l_', num2str(lambda), '_multipsnr.png'];
 saveas(multipsnrFig, multipsnrImageFileName);
 
 
@@ -101,7 +96,6 @@ plot(alpha, ber(:, 1), '-', alpha, ber(:, 2), '-o', alpha, ber(:, 3), '-*', alph
 legend(['block size = ' num2str(blkSizeList(1)) ' capacity = ' num2str(capacityList(1))], ['block size = ' num2str(blkSizeList(2)) ' capacity = ' num2str(capacityList(2))], ['block size = ' num2str(blkSizeList(3)) ' capacity = ' num2str(capacityList(3))], ['block size = ' num2str(blkSizeList(4)) ' capacity = ' num2str(capacityList(4))], ['block size = ' num2str(blkSizeList(5)) ' capacity = ' num2str(capacityList(5))] );
 
 multiberImageFileName = ['experiment\sliding_alpha\ber\a_' num2str(alpha_head) '_' num2str(alpha_tail) '_' num2str(alpha_slot) '_l_' num2str(lambda) '_multiber.png'];
-% multiberImageFileName = ['experiment\sliding_alpha\ber\a_0_b_0_l_', num2str(lambda), '_multiber.png'];
 saveas(multiberFig, multiberImageFileName);
 
 toc
