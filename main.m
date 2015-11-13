@@ -15,12 +15,11 @@ InputImage = imread(InputImage_Path);
 [height width ~] = size(InputImage);
 
 blkSizeList = [4, 8, 16, 32, 64]';
-% blkSizeList = [32, 64]';
 blkSizeListLen = length(blkSizeList);
 capacityList = floor(height./blkSizeList) .* floor(width./blkSizeList);
 
 alpha_head = 0.1;
-alpha_tail = 1;
+alpha_tail = 100;
 alpha_slot = 100;
 alpha = linspace(alpha_head, alpha_tail, alpha_slot);
 alphaLenth = length(alpha);
