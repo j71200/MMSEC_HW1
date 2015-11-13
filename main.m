@@ -16,22 +16,28 @@ InputImage = imread(InputImage_Path);
 
 blkSizeList = [4, 8, 16, 32, 64]';
 
-alpha = linspace(0.1, 100, 100);
+alpha = linspace(0.1, 20, 21);
 lambda = 1;
 
-for blkSizeIdx = 1:5
+for blkSizeIdx = 1:length(blkSizeList)
 	blkSize = blkSizeList(blkSizeIdx);
 	[height width ~] = size(InputImage);
 	capacity = floor(height/blkSize) * floor(width/blkSize);
 
-	mPSNR = zeros(100, 1);
-	ber = zeros(100, 1);
+	mPSNR = zeros(length(alpha), 1);
+	ber = zeros(length(alpha), 1);
 
-	for idx = 1:100
+	for idx = 1:length(alpha)
 		[mPSNR(idx) ber(idx) ] = measuring( InputImage, alpha(idx), blkSize, lambda );
-		disp( (blkSizeIdx-1)*100 + idx );
+		disp( ((blkSizeIdx-1)*length(alpha) + idx)*100/(length(blkSizeList)*length(alpha)) );
 	end
 
+	%% For saving
+	% dataFileName = ['experiment/sliding_alpha/mat/a_0_b_', num2str(blkSize), '_l_', num2str(lambda), '.mat'];
+	dataFileName = ['a_0_b_', num2str(blkSize), '_l_', num2str(lambda), '.mat'];
+	save(dataFileName, 'mPSNR', 'ber');
+
+	%% For ploting
 	psnrFig = figure;
 	hold on;
 	set(psnrFig, 'Visible', 'off');
@@ -39,7 +45,7 @@ for blkSizeIdx = 1:5
 	xlabel('alpha');
 	ylabel('PSNR');
 	plot(alpha, mPSNR, 'r');
-	psnrImageFileName = ['experiment\sliding_alpha\a_0_b_', num2str(blkSize), '_l_', num2str(lambda), '_psnr.png'];
+	psnrImageFileName = ['experiment\sliding_alpha\psnr\a_0_b_', num2str(blkSize), '_l_', num2str(lambda), '_psnr.png'];
 	saveas(psnrFig, psnrImageFileName);
 
 	berFig = figure;
@@ -49,7 +55,7 @@ for blkSizeIdx = 1:5
 	xlabel('alpha');
 	ylabel('bit error rate');
 	plot(alpha, ber, 'b');
-	berImageFileName = ['experiment\sliding_alpha\a_0_b_', num2str(blkSize), '_l_', num2str(lambda), '_ber.png'];
+	berImageFileName = ['experiment\sliding_alpha\ber\a_0_b_', num2str(blkSize), '_l_', num2str(lambda), '_ber.png'];
 	saveas(berFig, berImageFileName);
 
 end
