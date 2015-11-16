@@ -2,7 +2,6 @@
 close all
 clear('all');
 
-
 %% Set path of images
     InputImage_Dir = 'some_test_images/';
     InputImage_Name1 = 'airplane.bmp';
@@ -36,7 +35,7 @@ clear('all');
 
 	% Watermark embedding settings - set alpha, lambda, blkSize, pattern
 	% hint: randn()+sign() to generate pattern
-	alpha = 11;
+	alpha = 0.5;
 	lambda = 1;
 	blkSize = 8;
 	% TODO: patternSize should small than the middle band
@@ -45,7 +44,7 @@ clear('all');
 	pattern = sign(randn(patternSize, 1));
 	
 	% Generate watermark (fulfill the image)
-	[height width dimension] = size(InputImage);
+	[height width ~] = size(InputImage);
 	wmSize = floor(height/blkSize) * floor(width/blkSize);
 	watermark = sign(randn(wmSize, 1));
 

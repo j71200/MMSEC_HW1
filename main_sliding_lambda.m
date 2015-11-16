@@ -4,7 +4,6 @@ clc
 
 tic
 
-
 InputImage_Dir = 'some_test_images/';
 InputImage_Name1 = 'airplane.bmp';
 InputImage_Name2 = 'baboon.bmp';
