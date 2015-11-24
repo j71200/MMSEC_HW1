@@ -4,8 +4,6 @@ function [ extractResult ] = ISSextract( folderPath )
 %   Execute exmaple:
 %       extractResult = ISSextract('/Users/blue/Documents/MATLAB/104_1/MMSEC/HW1/experiment/watermarked_image/wm/airplane/')
 
-% folderPath = '/Users/blue/Documents/MATLAB/104_1/MMSEC/HW1/experiment/watermarked_image/wm/airplane/';
-
 tic
 
 load('data.mat');
@@ -24,7 +22,8 @@ for idx = 1:totalNumOfFile
 	parsedImgFileName = strsplit(imageName, '_');
 	alpha = str2num(parsedImgFileName{4});
 	blkSize = str2num(parsedImgFileName{6});
-	lambda = str2num( parsedImgFileName{8}(1:(end-4)) );
+	lambda = str2num(parsedImgFileName{8});
+	% lambda = str2num( parsedImgFileName{8}(1:(end-4)) );
 
 	patternSize = ceil(blkSize^2/3);
 	pattern = pattern_1366bit(1:patternSize);
