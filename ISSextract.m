@@ -55,10 +55,35 @@ extractResult = tmpExtractResult(permuteIndices, :);
 %% Saving
 save([folderPath 'extractResult.mat'], 'extractResult');
 
-%% Ploting
+%% Ploting multi-PSNR figure
 figure
+hold on;
+title('lambda = 1');
+xlabel('alpha');
+ylabel('PSNR');
+
+alphaList = [0.2, 0.3, 0.4, 0.5, 0.6]';
+blkSizeList = [4, 8, 16, 32, 64]';
+capacityList = floor(height./blkSizeList) .* floor(width./blkSizeList);
+idxOfBlksize4  = [1, 6, 11, 16, 21];
+idxOfBlksize8  = [2, 7, 12, 17, 22];
+idxOfBlksize16 = [3, 8, 13, 18, 23];
+idxOfBlksize32 = [4, 9, 14, 19, 24];
+idxOfBlksize64 = [5, 10, 15, 20, 25];
+
+plot(alphaList, extractResult(idxOfBlksize4, 4), '-', alphaList, extractResult(idxOfBlksize8, 4), '-o', alphaList, extractResult(idxOfBlksize16, 4), '-*', alphaList, extractResult(idxOfBlksize32, 4), '-s', alphaList, extractResult(idxOfBlksize64, 4), '-^');
+legend(['block size = ' num2str(blkSizeList(1)) ' capacity = ' num2str(capacityList(1))], ['block size = ' num2str(blkSizeList(2)) ' capacity = ' num2str(capacityList(2))], ['block size = ' num2str(blkSizeList(3)) ' capacity = ' num2str(capacityList(3))], ['block size = ' num2str(blkSizeList(4)) ' capacity = ' num2str(capacityList(4))], ['block size = ' num2str(blkSizeList(5)) ' capacity = ' num2str(capacityList(5))] );
 
 
+%% Ploting multi-BER figure
+figure;
+hold on;
+title('lambda = 1');
+xlabel('alpha');
+ylabel('bit error rate');
+
+plot(alphaList, extractResult(idxOfBlksize4, 5), '-', alphaList, extractResult(idxOfBlksize8, 5), '-o', alphaList, extractResult(idxOfBlksize16, 5), '-*', alphaList, extractResult(idxOfBlksize32, 5), '-s', alphaList, extractResult(idxOfBlksize64, 5), '-^');
+legend(['block size = ' num2str(blkSizeList(1)) ' capacity = ' num2str(capacityList(1))], ['block size = ' num2str(blkSizeList(2)) ' capacity = ' num2str(capacityList(2))], ['block size = ' num2str(blkSizeList(3)) ' capacity = ' num2str(capacityList(3))], ['block size = ' num2str(blkSizeList(4)) ' capacity = ' num2str(capacityList(4))], ['block size = ' num2str(blkSizeList(5)) ' capacity = ' num2str(capacityList(5))] );
 
 
 toc
