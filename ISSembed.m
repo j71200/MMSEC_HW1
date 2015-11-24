@@ -11,7 +11,7 @@ lambda = 1;
 
 blkSizeList = [4, 8, 16, 32, 64]';
 blkSizeListLen = length(blkSizeList);
-alphaList = [0.2, 0.3, 0.4, 0.5, 100]';
+alphaList = [0.2, 0.3, 0.4, 0.5, 0.6]';
 alphaListLen = length(alphaList);
 
 for blkSizeIdx = 1:blkSizeListLen
