@@ -2,10 +2,7 @@ function [ extractResult ] = ISSextractAfterShift( wmFolderPath, attackedFolderP
 %ISSEXTRACTAFTERSHIFT Summary of this function goes here
 %   This will extract watermark for all images in the given folder.
 %   Execute exmaple:
-%       extractResult = ISSextractAfterShift('/Users/blue/Documents/MATLAB/104_1/MMSEC/HW1/experiment/watermarked_image/wm/airplane/', '/Users/blue/Documents/MATLAB/104_1/MMSEC/HW1/experiment/attacked_image/2_rotate/airplane/')
-
-STD_HEIGHT = 512;
-STD_WIDTH  = 512;
+%       extractResult = ISSextractAfterShift('/Users/blue/Documents/MATLAB/104_1/MMSEC/HW1/experiment/watermarked_image/wm/airplane/', '/Users/blue/Documents/MATLAB/104_1/MMSEC/HW1/experiment/attacked_image/3_shift/airplane/')
 
 tic
 
@@ -18,17 +15,12 @@ for idx = 1:totalNumOfWMFile
 	wmImageName = wmFileNameList(idx).name;
 	wmImage = imread([wmFolderPath wmImageName]);
 
-	%% Rotate
-	rotatedImage = imrotate(wmImage, 1);
-	[height, width, ~] = size(rotatedImage);
-	if(height > STD_HEIGHT && width > STD_WIDTH)
-		% Croping
-		topMargin = floor((height - STD_HEIGHT)/2);
-		leftMargin = floor((width - STD_WIDTH)/2);
+	%% Shift
+	shiftedImage = uint8(zeros(size(wmImage)));
+	shiftedImage(2:end, :, :) = wmImage(1:end-1, :, :);
+	attackedImage = shiftedImage;
 
-		attackedImage = rotatedImage(topMargin+1:topMargin+STD_HEIGHT, leftMargin+1:leftMargin+STD_WIDTH, :);
-	end
-	imwrite(attackedImage, [attackedFolderPath wmImageName(1:end-4) '_rotate.png']);
+	imwrite(attackedImage, [attackedFolderPath wmImageName(1:end-4) '_shift.png']);
 end
 
 
