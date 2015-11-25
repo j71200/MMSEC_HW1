@@ -19,7 +19,7 @@ for idx = 1:totalNumOfWMFile
 	wmImage = imread([wmFolderPath wmImageName]);
 
 	%% Scale
-	scaledImage = imrotate(wmImage, 1);
+	scaledImage = imresize(wmImage, 1.1);
 	[height, width, ~] = size(scaledImage);
 	if(height > STD_HEIGHT && width > STD_WIDTH)
 		% Croping

@@ -59,7 +59,7 @@ for idx = 1:totalNumOfAttackedFile
 	% oriImage = imread([ attackedFolderPath parsedFolderPath{end-1} '.bmp']);
 	oriImage = imread([ '/Users/blue/Documents/MATLAB/104_1/MMSEC/HW1/some_test_images/' parsedFolderPath{end-1} '.bmp']);
 
-	extractResult(idx, 4) = psnr(SuspImage, oriImage);
+	% extractResult(idx, 4) = psnr(SuspImage, oriImage);
 	extractResult(idx, 5) = ber;
 end
 
@@ -76,11 +76,11 @@ extractResult = tmpExtractResult(permuteIndices, :);
 save([attackedFolderPath 'extractResult.mat'], 'extractResult');
 
 %% Ploting multi-PSNR figure
-figure
-hold on;
-title('lambda = 1');
-xlabel('alpha');
-ylabel('PSNR');
+% figure
+% hold on;
+% title('lambda = 1');
+% xlabel('alpha');
+% ylabel('PSNR');
 
 alphaList = [0.2, 0.3, 0.4, 0.5, 0.6]';
 blkSizeList = [4, 8, 16, 32, 64]';
@@ -91,8 +91,8 @@ idxOfBlksize16 = [3, 8, 13, 18, 23];
 idxOfBlksize32 = [4, 9, 14, 19, 24];
 idxOfBlksize64 = [5, 10, 15, 20, 25];
 
-plot(alphaList, extractResult(idxOfBlksize4, 4), '-', alphaList, extractResult(idxOfBlksize8, 4), '-o', alphaList, extractResult(idxOfBlksize16, 4), '-*', alphaList, extractResult(idxOfBlksize32, 4), '-s', alphaList, extractResult(idxOfBlksize64, 4), '-^');
-legend(['block size = ' num2str(blkSizeList(1)) ' capacity = ' num2str(capacityList(1))], ['block size = ' num2str(blkSizeList(2)) ' capacity = ' num2str(capacityList(2))], ['block size = ' num2str(blkSizeList(3)) ' capacity = ' num2str(capacityList(3))], ['block size = ' num2str(blkSizeList(4)) ' capacity = ' num2str(capacityList(4))], ['block size = ' num2str(blkSizeList(5)) ' capacity = ' num2str(capacityList(5))] );
+% plot(alphaList, extractResult(idxOfBlksize4, 4), '-', alphaList, extractResult(idxOfBlksize8, 4), '-o', alphaList, extractResult(idxOfBlksize16, 4), '-*', alphaList, extractResult(idxOfBlksize32, 4), '-s', alphaList, extractResult(idxOfBlksize64, 4), '-^');
+% legend(['block size = ' num2str(blkSizeList(1)) ' capacity = ' num2str(capacityList(1))], ['block size = ' num2str(blkSizeList(2)) ' capacity = ' num2str(capacityList(2))], ['block size = ' num2str(blkSizeList(3)) ' capacity = ' num2str(capacityList(3))], ['block size = ' num2str(blkSizeList(4)) ' capacity = ' num2str(capacityList(4))], ['block size = ' num2str(blkSizeList(5)) ' capacity = ' num2str(capacityList(5))] );
 
 
 %% Ploting multi-BER figure
