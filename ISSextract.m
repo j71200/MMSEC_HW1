@@ -37,7 +37,8 @@ for idx = 1:totalNumOfFile
 	extractResult(idx, 2) = blkSize;
 	extractResult(idx, 3) = lambda;
 	parsedFolderPath = strsplit(folderPath, '/');
-	oriImage = imread([ folderPath parsedFolderPath{end-1} '.bmp']);
+	% oriImage = imread([ folderPath parsedFolderPath{end-1} '.bmp']);
+	oriImage = imread([ '/Users/blue/Documents/MATLAB/104_1/MMSEC/HW1/some_test_images/' parsedFolderPath{end-1} '.bmp']);
 	extractResult(idx, 4) = psnr(SuspImage, oriImage);
 	extractResult(idx, 5) = ber;
 end
