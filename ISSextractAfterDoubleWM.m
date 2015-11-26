@@ -1,8 +1,8 @@
-function [ extractResult ] = ISSextractAfterGray( wmFolderPath, attackedFolderPath )
-%ISSEXTRACTAFTERGRAY Summary of this function goes here
+function [ extractResult ] = ISSextractAfterDoubleWM( wmFolderPath, attackedFolderPath )
+%ISSEXTRACTAFTERDOUBLEWM Summary of this function goes here
 %   This will extract watermark for all images in the given folder.
 %   Execute exmaple:
-%       extractResult = ISSextractAfterGray('/Users/blue/Documents/MATLAB/104_1/MMSEC/HW1/experiment/watermarked_image/wm/airplane/', '/Users/blue/Documents/MATLAB/104_1/MMSEC/HW1/experiment/attacked_image/7_gray/airplane/')
+%       extractResult = ISSextractAfterDoubleWM('/Users/blue/Documents/MATLAB/104_1/MMSEC/HW1/experiment/watermarked_image/wm/airplane/', '/Users/blue/Documents/MATLAB/104_1/MMSEC/HW1/experiment/attacked_image/10_doubleWM/airplane/')
 
 tic
 
@@ -15,12 +15,23 @@ for idx = 1:totalNumOfWMFile
 	wmImageName = wmFileNameList(idx).name;
 	wmImage = imread([wmFolderPath wmImageName]);
 
-	%% Grayscale
-	grayscaleImage = uint8(zeros(size(wmImage)));
-	grayscaleImage(2:end-1, 2:end-1, :) = wmImage(2:end-1, 2:end-1, :);
-	attackedImage = grayscaleImage;
+	%% Double watermark
+	alpha = 0.5;
+	lambda = 1;
+	blkSize = 64;
+	patternSize = ceil(blkSize^2/3);
+	pattern = sign(randn(patternSize, 1));
+	
+	% Generate watermark (fulfill the image)
+	[height width ~] = size(wmImage);
+	wmSize = floor(height/blkSize) * floor(width/blkSize);
+	watermark = sign(randn(wmSize, 1));
 
-	imwrite(attackedImage, [attackedFolderPath wmImageName(1:end-4) '_gray.png']);
+	% Improved Spread Spectrum Embed
+	doubleWMImage = ImprovedSpreadSpectrumEmbed(wmImage, watermark, pattern, alpha, lambda, blkSize);
+
+	attackedImage = doubleWMImage;
+	imwrite(attackedImage, [attackedFolderPath wmImageName(1:end-4) '_dblWM.png']);
 end
 
 
