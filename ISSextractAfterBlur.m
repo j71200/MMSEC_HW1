@@ -1,8 +1,8 @@
-function [ extractResult ] = ISSextractAfterShift( wmFolderPath, attackedFolderPath )
-%ISSEXTRACTAFTERSHIFT Summary of this function goes here
+function [ extractResult ] = ISSextractAfterBlur( wmFolderPath, attackedFolderPath )
+%ISSEXTRACTAFTERBLUR Summary of this function goes here
 %   This will extract watermark for all images in the given folder.
 %   Execute exmaple:
-%       extractResult = ISSextractAfterShift('/Users/blue/Documents/MATLAB/104_1/MMSEC/HW1/experiment/watermarked_image/wm/airplane/', '/Users/blue/Documents/MATLAB/104_1/MMSEC/HW1/experiment/attacked_image/3_shift/airplane/')
+%       extractResult = ISSextractAfterBlur('/Users/blue/Documents/MATLAB/104_1/MMSEC/HW1/experiment/watermarked_image/wm/airplane/', '/Users/blue/Documents/MATLAB/104_1/MMSEC/HW1/experiment/attacked_image/6_blur/airplane/')
 
 tic
 
@@ -15,12 +15,12 @@ for idx = 1:totalNumOfWMFile
 	wmImageName = wmFileNameList(idx).name;
 	wmImage = imread([wmFolderPath wmImageName]);
 
-	%% Shift
-	shiftedImage = uint8(zeros(size(wmImage)));
-	shiftedImage(2:end, :, :) = wmImage(1:end-1, :, :);
-	attackedImage = shiftedImage;
+	%% Blur
+	H_disk = fspecial('disk', 1);
+	blurredImage = imfilter(wmImage, H_disk, 'replicate');
+	attackedImage = blurredImage;
 
-	imwrite(attackedImage, [attackedFolderPath wmImageName(1:end-4) '_shift.png']);
+	imwrite(attackedImage, [attackedFolderPath wmImageName(1:end-4) '_blur.png']);
 end
 
 
@@ -58,6 +58,7 @@ for idx = 1:totalNumOfAttackedFile
 	parsedFolderPath = strsplit(attackedFolderPath, '/');
 	% oriImage = imread([ attackedFolderPath parsedFolderPath{end-1} '.bmp']);
 	oriImage = imread([ '/Users/blue/Documents/MATLAB/104_1/MMSEC/HW1/some_test_images/' parsedFolderPath{end-1} '.bmp']);
+
 	extractResult(idx, 4) = psnr(SuspImage, oriImage);
 	extractResult(idx, 5) = ber;
 end

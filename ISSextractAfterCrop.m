@@ -1,8 +1,8 @@
-function [ extractResult ] = ISSextractAfterShift( wmFolderPath, attackedFolderPath )
-%ISSEXTRACTAFTERSHIFT Summary of this function goes here
+function [ extractResult ] = ISSextractAfterCrop( wmFolderPath, attackedFolderPath )
+%ISSEXTRACTAFTERCROP Summary of this function goes here
 %   This will extract watermark for all images in the given folder.
 %   Execute exmaple:
-%       extractResult = ISSextractAfterShift('/Users/blue/Documents/MATLAB/104_1/MMSEC/HW1/experiment/watermarked_image/wm/airplane/', '/Users/blue/Documents/MATLAB/104_1/MMSEC/HW1/experiment/attacked_image/3_shift/airplane/')
+%       extractResult = ISSextractAfterCrop('/Users/blue/Documents/MATLAB/104_1/MMSEC/HW1/experiment/watermarked_image/wm/airplane/', '/Users/blue/Documents/MATLAB/104_1/MMSEC/HW1/experiment/attacked_image/5_crop/airplane/')
 
 tic
 
@@ -15,12 +15,12 @@ for idx = 1:totalNumOfWMFile
 	wmImageName = wmFileNameList(idx).name;
 	wmImage = imread([wmFolderPath wmImageName]);
 
-	%% Shift
-	shiftedImage = uint8(zeros(size(wmImage)));
-	shiftedImage(2:end, :, :) = wmImage(1:end-1, :, :);
-	attackedImage = shiftedImage;
+	%% Crop
+	croppedImage = uint8(zeros(size(wmImage)));
+	croppedImage(2:end-1, 2:end-1, :) = wmImage(2:end-1, 2:end-1, :);
+	attackedImage = croppedImage;
 
-	imwrite(attackedImage, [attackedFolderPath wmImageName(1:end-4) '_shift.png']);
+	imwrite(attackedImage, [attackedFolderPath wmImageName(1:end-4) '_crop.png']);
 end
 
 
